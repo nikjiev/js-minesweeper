@@ -8,9 +8,9 @@ const printBoard = board => {
 
 // Create the board
 let board = [
-  [' ',' ',' '],
-  [' ',' ',' '],
-  [' ',' ',' ']
+  [' ', ' ', ' '],
+  [' ', ' ', ' '],
+  [' ', ' ', ' ']
 ];
 
 // Set Values on the Game Board
