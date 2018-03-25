@@ -1,14 +1,20 @@
-// Simulated empty game
-const blankLine = '  |   |  ';
-console.log('This is what an empty board would look like:')
-console.log(blankLine);
-console.log(blankLine);
-console.log(blankLine);
+// Format the Game Board With printBoard()
+const printBoard = board => {
+  console.log ('Current Board: ');
+  console.log (board[0].join(' | '));
+  console.log (board[1].join(' | '));
+  console.log (board[2].join(' | '));
+}
 
-// Simulated board game
-const guessLine = '1 |   |  ';
-const bombLine = '  | B |  ';
-console.log('This is what a board with a guess and a bomb on it would look like:');
-console.log(guessLine);
-console.log(bombLine);
-console.log(blankLine);
+// Create the board
+let board = [
+  [' ',' ',' '],
+  [' ',' ',' '],
+  [' ',' ',' ']
+];
+
+// Set Values on the Game Board
+printBoard(board);
+board[0][1] = '1';
+board[2][2] = 'B';
+printBoard(board);
