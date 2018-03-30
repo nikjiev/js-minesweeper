@@ -1,20 +1,15 @@
-// Create the board
-const board = [
-  [' ', ' ', ' '],
-  [' ', ' ', ' '],
-  [' ', ' ', ' ']
-];
+// Dynamically Generate a Player Board
+const generatePlayerBoard = (numberOfRows, numberOfColumns) => {
+  const board = [];
 
-// Format the Game Board With printBoard()
-const printBoard = board => {
-  console.log ('Current Board: ');
-  console.log (board[0].join(' | '));
-  console.log (board[1].join(' | '));
-  console.log (board[2].join(' | '));
-}
+  for (let rows = 0; rows < numberOfRows; rows++) {
+    let row = [];
+    for (let columns = 0; columns < numberOfColumns; columns++) {
+      row.push(' ');
+    }
+    board.push(row);
+  }
+  return board;
+};
 
-// Set Values on the Game Board
-printBoard(board);
-board[0][1] = '1';
-board[2][2] = 'B';
-printBoard(board);
+console.log(generatePlayerBoard(2,3));
