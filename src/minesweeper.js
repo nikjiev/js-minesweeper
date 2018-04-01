@@ -51,23 +51,38 @@ const getNumberOfNeighborBombs = (bombBoard, rowIndex, columnIndex) => {
   ];
   const numberOfRows = bombBoard.length;
   const numberOfColumns = bombBoard[0].length;
+
   let numberOfBombs = 0;
 
   neighborOffsets.forEach(offset => {
     const neighborRowIndex = rowIndex + offset[0];
     const neighborColumnIndex = columnIndex + offset[1];
-    if (neighborRowIndex >= 0 && neighborRowIndex < numberOfRows
-        && neighborColumnIndex >= && neighborColumnIndex < numberOfColumns) {
-          if (bombBoard[neighborRowIndex][neighborColumnIndex] === 'B') {
-            numberOfBombs++;
-          }
-        }
-
+    if (neighborRowIndex >= 0 && neighborRowIndex < numberOfRows &&
+        neighborColumnIndex >= 0 && neighborColumnIndex < numberOfColumns) {
+      if (bombBoard[neighborRowIndex][neighborColumnIndex] === 'B') {
+          numberOfBombs++;
+      }
+    }
   });
   return numberOfBombs;
 };
 
-
+// Allows the user to flip a tile
+const flipTile = (playerBoard, bombBoard, rowIndex, columnIndex) => {
+  // The tile is not empty
+  if (playerBoard[rowIndex][columnIndex] !== ' ') {
+    console.log('This title has already been flipped!');
+    return;
+  }
+  // There is a bomb at that tile
+  else if (bombBoard[rowIndex][columnIndex] === 'B') {
+    playerBoard[rowIndex][columnIndex] = 'B';
+  }
+  // Flip the tile and display the number of neighboring bombs on that same tile
+  else {
+    playerBoard[rowIndex][columnIndex] = getNumberOfNeighborBombs(bombBoard, rowIndex, columnIndex);
+  }
+};
 
 // Update printBoard() Function
 const printBoard = board => {
@@ -81,3 +96,8 @@ console.log('Player Board: ');
 printBoard(playerBoard);
 console.log('Bomb Board: ');
 printBoard(bombBoard);
+
+// Test flipTile()
+flipTile(playerBoard, bombBoard, 0, 0);
+console.log('Updated Player Board: ');
+printBoard(playerBoard);
