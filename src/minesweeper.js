@@ -14,7 +14,7 @@ class Board {
   }
 
   // Allows the user to flip a tile
-  flipTile (rowIndex, columnIndex) => {
+  flipTile (rowIndex, columnIndex) {
     // The tile is not empty
     if (this._playerBoard[rowIndex][columnIndex] !== ' ') {
       console.log('This title has already been flipped!');
@@ -30,6 +30,44 @@ class Board {
     }
     this._numberOfEmptySpaces--;
   }
+
+  // Display the number of bombs adjacenet to the flipped tile
+  getNumberOfNeighborBombs(rowIndex, columnIndex) {
+    const neighborOffsets = [
+      [-1,-1],
+      [-1,0],
+      [-1,1],
+      [0,-1],
+      [0,1],
+      [1,-1],
+      [1,0],
+      [1,1]
+    ];
+    const numberOfRows = this._bombBoard.length;
+    const numberOfColumns = this._bombBoard[0].length;
+
+    let numberOfBombs = 0;
+
+    neighborOffsets.forEach(offset => {
+      const neighborRowIndex = rowIndex + offset[0];
+      const neighborColumnIndex = columnIndex + offset[1];
+      if (neighborRowIndex >= 0 && neighborRowIndex < numberOfRows &&
+          neighborColumnIndex >= 0 && neighborColumnIndex < numberOfColumns) {
+        if (this._bombBoard[neighborRowIndex][neighborColumnIndex] === 'B') {
+            numberOfBombs++;
+        }
+      }
+    });
+    return numberOfBombs;
+  }
+
+  // Check for Safe Tiles 
+  hasNonBombEmptySpaces() {
+    return this._numberOfEmptySpaces !== this._numberOfBombs;
+  }
+
+
+
 }
 
 // Dynamically Generate a Player Board
@@ -71,35 +109,7 @@ const generateBombBoard = (numberOfRows, numberOfColumns, numberOfBombs) => {
   return board;
 };
 
-// Display the number of bombs adjacenet to the flipped tile
-const getNumberOfNeighborBombs = (bombBoard, rowIndex, columnIndex) => {
-  const neighborOffsets = [
-    [-1,-1],
-    [-1,0],
-    [-1,1],
-    [0,-1],
-    [0,1],
-    [1,-1],
-    [1,0],
-    [1,1]
-  ];
-  const numberOfRows = bombBoard.length;
-  const numberOfColumns = bombBoard[0].length;
 
-  let numberOfBombs = 0;
-
-  neighborOffsets.forEach(offset => {
-    const neighborRowIndex = rowIndex + offset[0];
-    const neighborColumnIndex = columnIndex + offset[1];
-    if (neighborRowIndex >= 0 && neighborRowIndex < numberOfRows &&
-        neighborColumnIndex >= 0 && neighborColumnIndex < numberOfColumns) {
-      if (bombBoard[neighborRowIndex][neighborColumnIndex] === 'B') {
-          numberOfBombs++;
-      }
-    }
-  });
-  return numberOfBombs;
-};
 
 
 
