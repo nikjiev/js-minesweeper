@@ -1,10 +1,22 @@
-// Add Game class 
+// Add Game class
 class Game {
   constructor(numberOfRows, numberOfColumns, numberOfBombs) {
     this._board = new Board(numberOfRows, numberOfColumns, numberOfBombs);
   }
-}
 
+  playMove(rowIndex, columnIndex) {
+    this._board.flipTile(rowIndex, columnIndex);
+    if (this._board.playerBoard[rowIndex][columnIndex] === 'B') {
+      console.log('Game Over! Final Board:');
+      this._board.print();
+    } else if (!this._board.hasNonBombEmptySpaces()) {
+      console.log('Congratulations, you won!');
+    } else {
+      console.log('Current board:');
+      this._board.print();
+    }
+  }
+}
 
 // Add a Board Constructor
 class Board {
@@ -115,18 +127,7 @@ class Board {
     }
     return board;
   }
-
 }
 
-// Create Both Boards
-let playerBoard = generatePlayerBoard(3,4);
-let bombBoard = generateBombBoard(3,4,5);
-console.log('Player Board: ');
-printBoard(playerBoard);
-console.log('Bomb Board: ');
-printBoard(bombBoard);
-
-// Test flipTile()
-flipTile(playerBoard, bombBoard, 0, 0);
-console.log('Updated Player Board: ');
-printBoard(playerBoard);
+const g = new Game(3, 3, 3);
+g.playMove(0, 0);
