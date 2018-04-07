@@ -1,3 +1,11 @@
+// Add Game class 
+class Game {
+  constructor(numberOfRows, numberOfColumns, numberOfBombs) {
+    this._board = new Board(numberOfRows, numberOfColumns, numberOfBombs);
+  }
+}
+
+
 // Add a Board Constructor
 class Board {
 
@@ -61,62 +69,54 @@ class Board {
     return numberOfBombs;
   }
 
-  // Check for Safe Tiles 
+  // Check for Safe Tiles
   hasNonBombEmptySpaces() {
     return this._numberOfEmptySpaces !== this._numberOfBombs;
   }
 
+  // print() Function
+  print() {
+    console.log(this._playerBoard.map(row => row.join(' | ')).join('\n'));
+  }
 
+  // Dynamically Generate a Player Board
+  static generatePlayerBoard (numberOfRows, numberOfColumns) {
+    const board = [];
+
+    for (let rows = 0; rows < numberOfRows; rows++) {
+      let row = [];
+      for (let columns = 0; columns < numberOfColumns; columns++) {
+        row.push(' ');
+      }
+      board.push(row);
+    }
+    return board;
+  }
+
+  // Dynamically Generate a Bomb Board
+  static generateBombBoard (numberOfRows, numberOfColumns, numberOfBombs) {
+    const board = [];
+
+    for (let rows = 0; rows < numberOfRows; rows++) {
+      let row = [];
+      for (let columns = 0; columns < numberOfColumns; columns++) {
+        row.push(null);
+      }
+      board.push(row);
+    }
+    let numberOfBombsPlaced = 0;
+     while (numberOfBombsPlaced < numberOfBombs) {
+       let randomRowIndex = Math.floor(Math.random() * numberOfRows);
+       let randomColumnIndex = Math.floor(Math.random() * numberOfColumns);
+       if (board[randomRowIndex][randomColumnIndex] !== 'B') {
+         board[randomRowIndex][randomColumnIndex] = 'B';
+         numberOfBombsPlaced++;
+       }
+    }
+    return board;
+  }
 
 }
-
-// Dynamically Generate a Player Board
-const generatePlayerBoard = (numberOfRows, numberOfColumns) => {
-  const board = [];
-
-  for (let rows = 0; rows < numberOfRows; rows++) {
-    let row = [];
-    for (let columns = 0; columns < numberOfColumns; columns++) {
-      row.push(' ');
-    }
-    board.push(row);
-  }
-  return board;
-};
-
-
-// Dynamically Generate a Bomb Board
-const generateBombBoard = (numberOfRows, numberOfColumns, numberOfBombs) => {
-  const board = [];
-
-  for (let rows = 0; rows < numberOfRows; rows++) {
-    let row = [];
-    for (let columns = 0; columns < numberOfColumns; columns++) {
-      row.push(null);
-    }
-    board.push(row);
-  }
-  let numberOfBombsPlaced = 0;
-   while (numberOfBombsPlaced < numberOfBombs) {
-     let randomRowIndex = Math.floor(Math.random() * numberOfRows);
-     let randomColumnIndex = Math.floor(Math.random() * numberOfColumns);
-     if (board[randomRowIndex][randomColumnIndex] !== 'B') {
-       board[randomRowIndex][randomColumnIndex] = 'B';
-       numberOfBombsPlaced++;
-     }
-
-  }
-  return board;
-};
-
-
-
-
-
-// Update printBoard() Function
-const printBoard = board => {
-  console.log(board.map(row => row.join(' | ')).join('\n'));
-};
 
 // Create Both Boards
 let playerBoard = generatePlayerBoard(3,4);
