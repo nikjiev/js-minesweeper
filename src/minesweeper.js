@@ -1,11 +1,35 @@
 // Add a Board Constructor
 class Board {
+
   constructor (numberOfRows, numberOfColumns, numberOfBombs) {
     this._numberOfBombs = numberOfBombs;
     this._numberOfTiles = numberOfRows * numberOfColumns;
     this._playerBoard = Board.generatePlayerBoard(numberOfRows,numberOfColumns);
     this._bombBoard = Board.generatePlayerBoard(numberOfRows, numberOfColumns, numberOfBombs);
   }
+
+  // Add a playerBoard Getter Method
+  get playerBoard() {
+      return this._playerBoard;
+  }
+
+  // Allows the user to flip a tile
+  const flipTile = (playerBoard, bombBoard, rowIndex, columnIndex) => {
+    // The tile is not empty
+    if (playerBoard[rowIndex][columnIndex] !== ' ') {
+      console.log('This title has already been flipped!');
+      return;
+    }
+    // There is a bomb at that tile
+    else if (bombBoard[rowIndex][columnIndex] === 'B') {
+      playerBoard[rowIndex][columnIndex] = 'B';
+    }
+    // Flip the tile and display the number of neighboring bombs on that same tile
+    else {
+      playerBoard[rowIndex][columnIndex] = getNumberOfNeighborBombs(bombBoard, rowIndex, columnIndex);
+    }
+  };
+
 }
 
 // Dynamically Generate a Player Board
@@ -77,22 +101,7 @@ const getNumberOfNeighborBombs = (bombBoard, rowIndex, columnIndex) => {
   return numberOfBombs;
 };
 
-// Allows the user to flip a tile
-const flipTile = (playerBoard, bombBoard, rowIndex, columnIndex) => {
-  // The tile is not empty
-  if (playerBoard[rowIndex][columnIndex] !== ' ') {
-    console.log('This title has already been flipped!');
-    return;
-  }
-  // There is a bomb at that tile
-  else if (bombBoard[rowIndex][columnIndex] === 'B') {
-    playerBoard[rowIndex][columnIndex] = 'B';
-  }
-  // Flip the tile and display the number of neighboring bombs on that same tile
-  else {
-    playerBoard[rowIndex][columnIndex] = getNumberOfNeighborBombs(bombBoard, rowIndex, columnIndex);
-  }
-};
+
 
 // Update printBoard() Function
 const printBoard = board => {
