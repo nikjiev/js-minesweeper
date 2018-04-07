@@ -14,22 +14,22 @@ class Board {
   }
 
   // Allows the user to flip a tile
-  const flipTile = (playerBoard, bombBoard, rowIndex, columnIndex) => {
+  flipTile (rowIndex, columnIndex) => {
     // The tile is not empty
-    if (playerBoard[rowIndex][columnIndex] !== ' ') {
+    if (this._playerBoard[rowIndex][columnIndex] !== ' ') {
       console.log('This title has already been flipped!');
       return;
     }
     // There is a bomb at that tile
-    else if (bombBoard[rowIndex][columnIndex] === 'B') {
-      playerBoard[rowIndex][columnIndex] = 'B';
+    else if (this._bombBoard[rowIndex][columnIndex] === 'B') {
+      this._playerBoard[rowIndex][columnIndex] = 'B';
     }
     // Flip the tile and display the number of neighboring bombs on that same tile
     else {
-      playerBoard[rowIndex][columnIndex] = getNumberOfNeighborBombs(bombBoard, rowIndex, columnIndex);
+      this._playerBoard[rowIndex][columnIndex] = this.getNumberOfNeighborBombs(rowIndex, columnIndex);
     }
-  };
-
+    this._numberOfEmptySpaces--;
+  }
 }
 
 // Dynamically Generate a Player Board
